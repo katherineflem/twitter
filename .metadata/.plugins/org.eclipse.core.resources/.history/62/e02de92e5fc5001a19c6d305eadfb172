@@ -1,0 +1,40 @@
+package com.tts.TechTalentTwitter.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import com.tts.TechTalentTwitter.model.Tweet;
+import com.tts.TechTalentTwitter.model.User;
+import com.tts.TechTalentTwitter.service.TweetService;
+import com.tts.TechTalentTwitter.service.UserService;
+
+
+import java.util.List;
+
+@Controller
+public class UserController {
+
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private TweetService tweetService;
+
+	//create the users/username endpoint
+	@GetMapping(value = "/users/{username}")
+	//pathvariable will allow us to access whatever is in the url after/users/
+	public String getUser(@PathVariable(value = "username") String username, Model model) {
+		//calls userservice to find the user by username 
+		User user = userService.findByUsername(username);
+		//calls on tweetservice to find the tweets linked to that user
+		List<Tweet> tweets = tweetService.findAllByUser(user);
+		//adds to the models
+		model.addAttribute("tweetList", tweets);
+		model.addAttribute("user", user);
+		//renders the user 
+		return "user";
+	}
+}

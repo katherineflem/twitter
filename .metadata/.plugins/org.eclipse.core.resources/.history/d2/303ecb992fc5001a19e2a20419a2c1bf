@@ -1,0 +1,6 @@
+<script type="text/javascript" language="javascript">
+function redirect()
+{
+    window.location.href="tweets";
+}
+</script>

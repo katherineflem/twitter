@@ -1,0 +1,15 @@
+function redirect() {
+  window.location.replace("/tweets");
+  return false;
+}
+
+
+const handleButtonClick=()=>{
+    if(!User || User.userid !== blog.authorid){
+        props.history.push('/login');
+        alert("You must be the author of this blog to edit")
+    }else{
+        console.log(`/${blog.id}/editblog`)
+        props.history.push(`/${blog.id}/editblog`)//this isnt working not sure why
+    }
+}

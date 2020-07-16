@@ -1,0 +1,6 @@
+.card{
+	border: 1pt solid black;
+	margin: 10px;
+	text-align: center;
+	box-shadow: 10px;
+}

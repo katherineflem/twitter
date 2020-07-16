@@ -1,0 +1,21 @@
+package com.tts.TechTalentTwitter.controller;
+
+public class UserController {
+//creating an endpoint called users/{username} to see a users profile
+//by adding @PathVariable(value="username") String username as a parameter to method, we are able to access whatever is 
+	// in the URL after/users/ in the variable username
+
+	@Controller
+	public class UserController {
+
+		@Autowired
+		private UserService userService;
+
+		@Autowired
+		private TweetService tweetService;
+
+		@GetMapping(value = "/users/{username}")
+		public String getUser(@PathVariable(value = "username") String username, Model model) {
+		}
+	}
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.tts.TechTalentTwitter.model.User"/>
+<fullyQualifiedTypeName name="antlr.collections.List"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="javax.persistence.Entity"/>
+<fullyQualifiedTypeName name="javax.persistence.CascadeType"/>
+<fullyQualifiedTypeName name="javax.persistence.Id"/>
+<fullyQualifiedTypeName name="com.tts.TechTalentTwitter.model.Tag"/>
+<fullyQualifiedTypeName name="com.tts.TechTalentTwitter.repository.TagRepository"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.concurrent.TimeUnit"/>
+<fullyQualifiedTypeName name="java.sql.Date"/>
+<fullyQualifiedTypeName name="com.tts.TechTalentTwitter.model.TweetDisplay"/>
+</qualifiedTypeNameHistroy>

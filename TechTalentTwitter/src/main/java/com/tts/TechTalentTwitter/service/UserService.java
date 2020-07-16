@@ -1,0 +1,66 @@
+package com.tts.TechTalentTwitter.service;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.tts.TechTalentTwitter.model.Role;
+import com.tts.TechTalentTwitter.model.User;
+import com.tts.TechTalentTwitter.repository.RoleRepository;
+import com.tts.TechTalentTwitter.repository.UserRepository;
+
+@Service
+public class UserService {
+//finds the user in the db and their role, and encrypts their password to store as a hash in the db
+    private UserRepository userRepository;
+    private RoleRepository roleRepository;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired //what does this mean?
+    public UserService(UserRepository userRepository, 
+                       RoleRepository roleRepository,
+                       BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+  //SERVICE METHODS TO CALL REPOSITORY METHODS
+    //find one user
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+    //find all users
+    public List<User> findAll(){
+        return (List<User>) userRepository.findAll();
+    }
+    //save the user
+    public void save(User user) {
+        userRepository.save(user);
+    }
+    
+  //creates a new user and saves in the db
+    public User saveNewUser(User user) {
+    	//password created, and stored as a unique hash in db
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        //enabled as active
+        user.setActive(1);
+        //gives the user a role 
+        Role userRole = roleRepository.findByRole("USER");
+        //idk what this does...
+        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        return userRepository.save(user);
+    }
+    
+    //METHOD TO GET the logged in user by their auth token, name, and context?
+    public User getLoggedInUser() {
+        String loggedInUsername = SecurityContextHolder.
+          getContext().getAuthentication().getName();
+        
+        return findByUsername(loggedInUsername);
+    }
+}

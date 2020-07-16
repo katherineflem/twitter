@@ -1,0 +1,57 @@
+package com.tts.TechTalentTwitter.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import com.tts.TechTalentTwitter.model.Tweet;
+import com.tts.TechTalentTwitter.model.User;
+import com.tts.TechTalentTwitter.service.TweetService;
+import com.tts.TechTalentTwitter.service.UserService;
+
+import java.util.HashMap;
+import java.util.List;
+
+@Controller
+public class UserController {
+
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private TweetService tweetService;
+
+	//create the users/username endpoint
+	@GetMapping(value = "/users/{username}")
+	//pathvariable will allow us to access whatever is in the url after/users/
+	
+	public String getUser(@PathVariable(value = "username") String username, Model model) {
+		//calls userservice to find the user by username 
+		User user = userService.findByUsername(username);
+		//calls on tweetservice to find the tweets linked to that user
+		List<Tweet> tweets = tweetService.findAllByUser(user);
+		//adds to the models
+		model.addAttribute("tweetList", tweets);
+		model.addAttribute("user", user);
+		//renders the user 
+		return "user";
+	}
+	//method to serve up a page to see all users
+	@GetMapping(value = "/users")
+	public String getUsers(Model model) {
+		//call on userservice to get all users
+	    List<User> users = userService.findAll();
+	    model.addAttribute("users", users);
+	    //this method will show how many times each user has tweeted
+	    //takes in a list of users and the model, update the model to include tweet counts
+	    SetTweetCounts(users, model);
+	    return "users";
+	    
+	}
+	  private void SetTweetCounts(List<User> users, Model model) {
+	        HashMap<String,Integer> tweetCounts = new HashMap<>();
+	
+}
+}
